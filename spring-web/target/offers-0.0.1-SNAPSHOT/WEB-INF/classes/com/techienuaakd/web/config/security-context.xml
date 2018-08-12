@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+	<authentication-manager id="auth">
+		<authentication-provider>
+			<user-service>
+				<user name="saurabh" authorities="role_admin"
+					password="{noop}root" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+	<http use-expressions="true">
+		<intercept-url access="permitAll" pattern="/" />
+		<intercept-url access="permitAll" pattern="/offers" />
+		<intercept-url access="permitAll" pattern="/static/**" />
+		<intercept-url access="permitAll" pattern="/loginPage" />
+		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url access="isAuthenticated()" pattern="/offerCreated" />
+		<intercept-url access="isAuthenticated()" pattern="/addOffer" />
+		<intercept-url access="isAuthenticated()" pattern="/createOffer" />
+		<intercept-url access="denyAll" pattern="/**" />
+		<form-login login-page="/login"
+			authentication-failure-url="/login?error=true" />
+	</http>
+</b:beans>
